@@ -1,0 +1,73 @@
+service: pintweet-services
+custom:
+  tableName: "Tweet-${self:provider.stage}"
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: demo
+  region: ap-northeast-2
+  # TODO: Create a genric policies
+  ServiceLambdaRole:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+        - dynamodb:BatchGetItem
+        - dynamodb:BatchWriteItem
+      Resource:
+        - { "Fn::GetAtt": ["Tweet", "Arn"] }
+  environment:
+    TWEET_TABLE: ${self:custom.tableName}
+
+functions:
+  TweetFunction:
+    handler: index.handler
+    events:
+      - http:
+          path: tweet 
+          method: Get
+          cors: true
+
+resources:
+  Resources:
+  # TODO: Improve table design 
+    Tweet:
+      Type: "AWS::DynamoDB::Table"
+      Properties:
+        TableName: ${self:custom.tableName}
+        AttributeDefinitions:
+          - AttributeName: id 
+            AttributeType: S
+          - AttributeName: typ 
+            AttributeType: S
+        # TODO:                           Attributes are commented out to satisfy cloudformation
+        # - AttributeName:                text #  tweetert ext
+        #   AttributeType:                S
+        # - AttributeName:                uN #  user name 
+        #   AttributeType:                S
+        # - AttributeName:                uE #  user email 
+        #   AttributeType:                S
+        # - AttributeName:                dtC #  date created 
+        #   AttributeType:                S
+        # - AttributeName:                dtU #  date updated 
+        #   AttributeType:                S
+        KeySchema:
+          - AttributeName: id 
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 10
+          WriteCapacityUnits: 10
+        GlobalSecondaryIndexes:
+          - IndexName: TweetList 
+            KeySchema:
+              - AttributeName: typ 
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+            ProvisionedThroughput:
+              ReadCapacityUnits: 10
+              WriteCapacityUnits: 10
