@@ -1,3 +1,4 @@
+# TODO: Revit to organize it  
 service: pintweet-services
 custom:
   tableName: "Tweet-${self:provider.stage}"
@@ -35,6 +36,7 @@ functions:
 resources:
   Resources:
   # TODO: Improve table design 
+  # TODO: Discussion on table provision
     Tweet:
       Type: "AWS::DynamoDB::Table"
       Properties:
