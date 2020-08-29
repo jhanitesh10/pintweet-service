@@ -1,13 +1,10 @@
 // TODO: Use types[TypeScript]
 // TODO: Setup babel & jestt
 // TODO: Setup EsList 
-import AWS from 'aws-sdk';
+const AWS = require('aws-sdk');
+const initializeEnv = require('./utils');
 
-import {
-  initializeEnv,
-} from './util';
-
-async function getObject(
+module.exports = async function getObject(
   id,
   reqAtts,
 ) {
@@ -34,5 +31,3 @@ async function getObject(
     throw e;
   }
 }
-
-export default getObject;

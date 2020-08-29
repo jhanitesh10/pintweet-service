@@ -1,8 +1,8 @@
 // TODO: Use types[TypeScript]
 // TODO: Setup babel & jestt
 // TODO: Setup EsList 
-import AWS from 'aws-sdk';
-const initializeEnv = () => {
+const AWS = require('aws-sdk');
+module.exports = initializeEnv = () => {
   const tweetTable= env('TWEET_TABLE');
   AWS.config.update({
     region: process.env.AWS_REGION_NAME,
@@ -13,7 +13,3 @@ const initializeEnv = () => {
     tweetTable,
   };
 };
-
-export {
-  initializeEnv,
-}

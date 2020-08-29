@@ -2,8 +2,8 @@
 // TODO: Use types[TypeScript]
 // TODO: Setup babel & jestt
 // TODO: Setup EsList 
-import AWS from 'aws-sdk';
-async function getContextObjects(
+const AWS = require('aws-sdk');
+module.exports = async function getContextObjects(
   typ,
   reqAtts,
 ){
@@ -40,5 +40,3 @@ async function getContextObjects(
     throw e;
   }
 }
-
-export default getContextObjects;
