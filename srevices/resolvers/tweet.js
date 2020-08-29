@@ -1,4 +1,5 @@
 const addTweet = require('../module/add-tweet');
+const listTweet = require('../module/list-tweet');
 module.exports = {
   Mutation: {
     async addTweet(_, { id, input}) {
@@ -7,26 +8,9 @@ module.exports = {
     },
   },
   Query: {
-    listTweet(_, { input }, { models }) {
-      // TODO: Get it form server
-      const tweet = {
-        nextToken: "token",
-        edges: [{
-          cursor: "cursor",
-          node:  {
-            id: "id",
-            text: "tweet",
-            userName: "Nitesh",
-          }
-        }],
-        pageInfo: {
-          hasNextPage:  false,
-          endCursor:  "cursor",
-          startCursor:  "cursor"
-        } 
-      };
-      console.log(tweet);
-      return tweet;
+    async listTweet(_, { first, after}, { models }) {
+      const result = await listTweet(first, after);
+      return result;
     },
   },
 };

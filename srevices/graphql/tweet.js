@@ -27,7 +27,7 @@ const typeDefs = gql`
     node: Tweet 
   }
   type Query {
-    listTweet: TweetConnection! 
+    listTweet(first: Int, after: String): TweetConnection! 
   }
   type Mutation {
     addTweet(id: ID!, input: TweetInput!): Tweet!
