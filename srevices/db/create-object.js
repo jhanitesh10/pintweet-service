@@ -5,20 +5,29 @@ const AWS = require('aws-sdk');
 const initializeEnv = require('./utils');
 module.exports = async function createObject(
   object,
-): Promise<StoredObjectResult<T>> {
+){
   const {
     DDB,
     tweetTable,
   } = initializeEnv();
+  const {
+    id,
+    userName,
+    text,
+  } = object;
   const now = new Date().toISOString();
   const row = {
-    ...object,
+    id, 
+    uN: userName,
+    t: text,
+    typ: 'TWEET',
     dtC: now,
     dtU: now,
   };
+  console.log(row);
   const item = AWS.DynamoDB.Converter.marshall(row);
   const params = {
-    TableName: objectStoreTableName,
+    TableName: tweetTable,
     Item: {
       ...item,
     },

@@ -1,7 +1,9 @@
+const addTweet = require('../module/add-tweet');
 module.exports = {
   Mutation: {
-    addTweet(_, { input }) {
-      // TODO: create object function
+    async addTweet(_, { id, input}) {
+     const result = await addTweet(id, input); 
+     return result;
     },
   },
   Query: {
