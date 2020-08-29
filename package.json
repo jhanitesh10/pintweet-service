@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "apollo-server": "^2.17.0",
     "aws-sdk": "^2.742.0"
   }
 }
