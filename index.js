@@ -1,7 +1,7 @@
 const getObject = require('./src/dynamodb/get-object');
 exports.handler = async function handler() {
   console.log("Insde lamdba function");
-  const object = getObject("id");
+  const object = await getObject("id");
   console.log("object", object);
   return {
     status: 200,
