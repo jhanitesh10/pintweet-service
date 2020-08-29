@@ -1,4 +1,5 @@
 # TODO: Revit to organize it  
+# TODO: make region dynamic
 service: pintweet-services
 custom:
   tableName: "Tweet-${self:provider.stage}"
@@ -23,6 +24,8 @@ provider:
         - { "Fn::GetAtt": ["Tweet", "Arn"] }
   environment:
     TWEET_TABLE: ${self:custom.tableName}
+    AWS_REGION_NAME: ${self:provider.region}
+    
 
 functions:
   TweetFunction:

@@ -5,7 +5,7 @@ import AWS from 'aws-sdk';
 const initializeEnv = () => {
   const tweetTable= env('TWEET_TABLE');
   AWS.config.update({
-    region: process.env.AWS_REGION,
+    region: process.env.AWS_REGION_NAME,
   });
   DDB = new AWS.DynamoDB();
   return {
