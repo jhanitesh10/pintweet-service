@@ -64,7 +64,7 @@ resources:
           ReadCapacityUnits: 10
           WriteCapacityUnits: 10
         GlobalSecondaryIndexes:
-          - IndexName: TweetList 
+          - IndexName: Context 
             KeySchema:
               - AttributeName: typ 
                 KeyType: HASH
