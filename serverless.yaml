@@ -1,6 +1,6 @@
 # TODO: Revit to organize it  
 # TODO: make region dynamic
-service: pintweet-services
+service: pintweet-service
 custom:
   tableName: "Tweet-${self:provider.stage}"
 provider:
@@ -8,10 +8,14 @@ provider:
   runtime: nodejs12.x
   stage: demo
   region: ap-northeast-2
-  # TODO: Create a genric policies
-  ServiceLambdaRole:
+  iamRoleStatements:
     - Effect: Allow
       Action:
+        - lambda:InvokeFunction
+        - lambda:ListFunctions
+        - logs:CreateLogGroup
+        - logs:CreateLogStream
+        - logs:PutLogEvents
         - dynamodb:Query
         - dynamodb:Scan
         - dynamodb:GetItem
