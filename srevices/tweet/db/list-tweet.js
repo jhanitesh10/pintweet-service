@@ -36,7 +36,6 @@ module.exports = async function listTweet(
     ReturnConsumedCapacity: 'NONE',
     ProjectionExpression: reqAtts,
   };
-  console.log(params)
   try {
     // TODO: Handle 1MB size limit
     // TODO: Move converter to common place
@@ -47,7 +46,6 @@ module.exports = async function listTweet(
       const {typ: {S: typKey}, id: {S: idKey}} = LastEvaluatedKey;
       nextToken = `${idKey}#${typKey}`
     } 
-    console.log(nextToken);
     return {nextToken, items}; 
   } catch (e) {
     console.log('Error get context objects:', e);

@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "@apollo/gateway": "^0.20.0",
+    "apollo-server": "^2.17.0",
+    "graphql": "^15.3.0"
+  },
+  "name": "srevices",
+  "version": "1.0.0",
+  "main": "gateway.js",
+  "license": "MIT"
+}

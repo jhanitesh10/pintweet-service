@@ -9,15 +9,19 @@ module.exports = {
   },
   Query: {
     async listTweet(_, { first, after}, { models }) {
-      const {items, nextToken}= await listTweet('TWEET', "id, t, uN, dtC, dtU", first, after);
-      const edges = items.map(({id, uN, t, dtU, dtC})=> ({
+      const {items, nextToken}= await listTweet('TWEET', "id, uId, uN, t, dtC, dtU", first, after);
+      const edges = items.map(({id, uId, uN, t, dtU, dtC})=> ({
         cursor: `${id}-C`, 
         node: {
           id, 
-          userName: uN, 
+          userId: uId, 
           text: t, 
           created: dtC, 
-          updated:dtU
+          updated:dtU,
+          user(tweet) {
+            console.log("##############", tweet);
+            return { __typename: "User", id: "user-1"};
+          }
         }
       }));
       const tweet = {

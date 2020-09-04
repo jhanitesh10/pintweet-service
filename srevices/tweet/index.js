@@ -5,6 +5,6 @@ const resolvers = require("./resolvers/tweet");
 const server = new ApolloServer({
   schema: buildFederatedSchema([{ typeDefs, resolvers }])
 });
-server.listen(4001).then(({ url }) => {
+server.listen(4009).then(({ url }) => {
     console.log(`🚀 Server ready at ${url}`);
 });

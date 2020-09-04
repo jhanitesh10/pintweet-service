@@ -5,6 +5,6 @@ const resolvers = require("./resolvers/user");
 const server = new ApolloServer({
   schema: buildFederatedSchema([{ typeDefs, resolvers }])
 });
-server.listen(4001).then(({ url }) => {
+server.listen(4008).then(({ url }) => {
     console.log(`🚀 Server ready at ${url}`);
 });

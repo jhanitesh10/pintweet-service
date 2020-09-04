@@ -3,7 +3,13 @@ const getUser = require('../db/get-user');
 module.exports = {
   User : {
     async __resolveReference(object) {
-        return await getUser(object.userId);
+        const {id, uN, dtC, dtU} = await getUser(object.id);
+        return {
+          id,
+          name: uN,
+          created: dtC,
+          updated: dtU,
+        }
     }
   },
   Mutation: {
