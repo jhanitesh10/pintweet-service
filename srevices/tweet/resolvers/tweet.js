@@ -18,9 +18,8 @@ module.exports = {
           text: t, 
           created: dtC, 
           updated:dtU,
-          user(tweet) {
-            console.log("##############", tweet);
-            return { __typename: "User", id: "user-1"};
+          user() {
+            return { __typename: "User", id: uId};
           }
         }
       }));
