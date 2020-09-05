@@ -1,0 +1,66 @@
+# TODO: Revit to organize it  
+# TODO: make region dynamic
+service: pintweet-service-user
+custom:
+  tableName: "User-${self:provider.stage}"
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: demo
+  region: ap-northeast-2
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - lambda:InvokeFunction
+        - lambda:ListFunctions
+        - logs:CreateLogGroup
+        - logs:CreateLogStream
+        - logs:PutLogEvents
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+        - dynamodb:BatchGetItem
+        - dynamodb:BatchWriteItem
+      Resource:
+        - { "Fn::GetAtt": ["User", "Arn"] }
+  environment:
+    USER_TABLE: ${self:custom.tableName}
+    AWS_REGION_NAME: ${self:provider.region}
+    
+
+functions:
+  UserFunction:
+    handler: index.handler
+    events:
+      - http:
+          path: user 
+          method: Get
+          cors: true
+
+resources:
+  Resources:
+  # TODO: Improve table design 
+  # TODO: Discussion on table provision
+    User:
+      Type: "AWS::DynamoDB::Table"
+      Properties:
+        TableName: ${self:custom.tableName}
+        AttributeDefinitions:
+          - AttributeName: id 
+            AttributeType: S
+        # TODO:                           Attributes are commented out to satisfy cloudformation
+        # - AttributeName:                uN #  user name 
+        #   AttributeType:                S
+        # - AttributeName:                dtC #  date created 
+        #   AttributeType:                S
+        # - AttributeName:                dtU #  date updated 
+        #   AttributeType:                S
+        KeySchema:
+          - AttributeName: id 
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 10
+          WriteCapacityUnits: 10

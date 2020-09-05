@@ -3,7 +3,7 @@ const { gql } = require("apollo-server");
 const typeDefs = gql`
   input TweetInput {
     text: String!
-    userName: String!
+    userId: ID!
   }
   type PageInfo {
     hasNextPage: Boolean!
@@ -12,8 +12,9 @@ const typeDefs = gql`
   }
   type Tweet {
     id: ID!
+    userId: ID!
     text: String!
-    userName: String!
+    user: User!
     created: String!
     updated: String!
   }
@@ -25,6 +26,9 @@ const typeDefs = gql`
   type TweetEdge {
     cursor: String!
     node: Tweet 
+  }
+  extend type User @key(fields : "id") {
+    id : ID! @external
   }
   type Query {
     listTweet(first: Int, after: String): TweetConnection! 

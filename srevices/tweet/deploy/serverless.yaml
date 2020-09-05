@@ -1,6 +1,6 @@
 # TODO: Revit to organize it  
 # TODO: make region dynamic
-service: pintweet-service
+service: pintweet-service-tweet
 custom:
   tableName: "Tweet-${self:provider.stage}"
 provider:
@@ -71,7 +71,7 @@ resources:
           ReadCapacityUnits: 10
           WriteCapacityUnits: 10
         GlobalSecondaryIndexes:
-          - IndexName: Context 
+          - IndexName: CONTEXT 
             KeySchema:
               - AttributeName: typ 
                 KeyType: HASH

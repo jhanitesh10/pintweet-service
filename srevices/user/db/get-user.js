@@ -10,14 +10,14 @@ module.exports = async function getObject(
 ) {
   const {
     DDB,
-    tweetTable,
+    userTable,
   } = initializeEnv();
   const keyExpression = {
     id,
   };
 // TODO: Move conveter function  into util & re-use it
   const params = {
-    TableName: tweetTable,
+    TableName: userTable,
     Key: AWS.DynamoDB.Converter.marshall(keyExpression),
     ConsistentRead: false,
     ProjectionExpression: reqAtts,

@@ -8,26 +8,22 @@ module.exports = async function createObject(
 ){
   const {
     DDB,
-    tweetTable,
+    userTable,
   } = initializeEnv();
   const {
     id,
-    userName,
-    text,
+    name,
   } = object;
   const now = new Date().toISOString();
   const row = {
     id, 
-    uN: userName,
-    t: text,
-    typ: 'TWEET',
+    uN: name,
     dtC: now,
     dtU: now,
   };
-  console.log(row);
   const item = AWS.DynamoDB.Converter.marshall(row);
   const params = {
-    TableName: tweetTable,
+    TableName: userTable,
     Item: {
       ...item,
     },
