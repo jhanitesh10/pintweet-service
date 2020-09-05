@@ -26,11 +26,11 @@ module.exports = {
       const tweet = {
         nextToken,
         edges,
-          pageInfo: {
-          hasNextPage:  false,
+        pageInfo: {
+          hasNextPage:  nextToken ? true : false,
           endCursor:  "cursor",
-          startCursor:  "cursor"
-        } 
+          startCursor:  "cursor",
+      },
       };
       return  tweet;
     },

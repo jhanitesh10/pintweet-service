@@ -13,6 +13,7 @@ module.exports = async function listTweet(
     DDB,
     tweetTable,
   } = initializeEnv();
+  const firstLimit = first || 2;
   let keyExpression = 'typ = :t';
   const attrValues = {
     ':t': {
@@ -31,7 +32,7 @@ module.exports = async function listTweet(
     KeyConditionExpression: keyExpression,
     ExpressionAttributeValues: attrValues,
     IndexName: 'CONTEXT',
-    Limit: first? first : null,
+    Limit: firstLimit,
     ConsistentRead: false,
     ReturnConsumedCapacity: 'NONE',
     ProjectionExpression: reqAtts,
@@ -40,7 +41,7 @@ module.exports = async function listTweet(
     // TODO: Handle 1MB size limit
     // TODO: Move converter to common place
     let nextToken = null;
-    const {LastEvaluatedKey, Items}= await DDB.query(params).promise();
+    const {LastEvaluatedKey, Items, Count}= await DDB.query(params).promise();
     const items =  Items.map(item => AWS.DynamoDB.Converter.unmarshall(item));
     if(LastEvaluatedKey){
       const {typ: {S: typKey}, id: {S: idKey}} = LastEvaluatedKey;
