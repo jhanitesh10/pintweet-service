@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react';
 import gql from 'graphql-tag'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import TweetCardList from '../components/TweetCardList'
@@ -6,6 +6,7 @@ import TweetForm from '../components/TweetForm'
 import Loader from '../components/Loader'
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
+import { v4 as uuidv4 } from 'uuid';
 
 /* Graphql operations */
 const LIST_TWEETS = gql` 
@@ -34,13 +35,24 @@ const LIST_TWEETS = gql`
     }
   } `
 
-const NEW_TEET = gql` 
+const NEW_TWEET = gql` 
   mutation AddTweet($id: ID!, $tweetInput: TweetInput!) {
     addTweet(id: $id, input: $tweetInput) {
       id
       text 
       created
-      updaated
+      updated
+    }
+  }
+`
+
+const CREATE_USER = gql` 
+  mutation CreateUser($id: ID!, $name: String!) {
+    createUser(id: $id, name: $name) {
+      id
+      name
+      created
+      updated
     }
   }
 `
@@ -50,6 +62,10 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
   },
 }));
+// TODO: Handle
+// Caching
+// Optimistic upate
+// Hydrate the storage on mutation
 export default function Tweets() {
   const classes = useStyles();
 
@@ -61,22 +77,13 @@ export default function Tweets() {
       fetchPolicy: "cache-and-network"
     }
     );
-  const [createPet, newPet] = useMutation(NEW_TEET, {
-    // update(cache, { data: { addTweet } }) {
-    //   const data = cache.readQuery({ query: LIST_TWEETS})
-    //   cache.writeQuery({
-    //     query: LIST_TWEETS,
-    //     data: {pets: [addTweet, data.tweets]}
-    //   })
-    // }
-  });
-
+  const [addTweet, newTweet] = useMutation(NEW_TWEET);
+  const [createUser, newUser] = useMutation(CREATE_USER);
   
   const updateQuery = (previousResult, { fetchMoreResult }) => {
     if (!fetchMoreResult) {
       return previousResult;
     }
-    console.log(fetchMoreResult.listTweet.edges); 
     const result = {
       listTweet: {
         "__typename": fetchMoreResult.listTweet.__typename,
@@ -95,21 +102,18 @@ export default function Tweets() {
     };
     return result;
   };
-  const onSubmit = input => {
-    createPet({
-      variables: { newPet: input },
-      optimisticResponse: {
-        __typename: 'Mutation',
-        addPet: {
-          __typename: 'Pet',
-          id: Math.floor(Math.random() * 10000 + ""),
-          name: input.name,
-          type: input.type,
-          img: 'https://via.placeholder.com/300'
-
-        }
-      }
-    })
+  const onSubmit = async (data)=> {
+    const user = {
+      id: uuidv4(),
+      name: data.name
+    };
+    const tweet = {
+      id: uuidv4(),
+      text: data.text,
+      userId: user.id,
+    };
+    createUser({ variables: { id: user.id, name: user.name}, })
+    addTweet({ variables: { id: tweet.id, tweetInput: {text: tweet.text, userId: tweet.userId}}, })
   }
 
    
@@ -117,7 +121,7 @@ export default function Tweets() {
     return <Loader />
   }
   
-  if (error || newPet.error) {
+  if (error) {
     return <p>Eroor ococured!!</p>
   }
   
