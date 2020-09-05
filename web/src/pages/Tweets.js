@@ -7,7 +7,9 @@ import Loader from '../components/Loader'
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import { v4 as uuidv4 } from 'uuid';
+import Grid from '@material-ui/core/Grid';
 
+import Divider from '@material-ui/core/Divider';
 /* Graphql operations */
 const LIST_TWEETS = gql` 
   query ListTweet($first: Int, $after: String){
@@ -58,9 +60,9 @@ const CREATE_USER = gql`
 `
 
 const useStyles = makeStyles((theme) => ({
-  button: {
-    margin: theme.spacing(1),
-  },
+  dividerColor: {
+    margin: '20px'
+}, 
 }));
 // TODO: Handle
 // Caching
@@ -126,20 +128,17 @@ export default function Tweets() {
   }
   
   return (
-    <div className="page pets-page">
-      <section>
-        <div className="row betwee-xs middle-xs">
-          <div className="col-xs-10">
-            <h1>Tweets</h1>
-          </div>
-          <div className="col-xs-2">
-            <TweetForm onSubmit={onSubmit}/> 
-          </div>
-        </div>
-      </section>
-      <section>
+    <div>
+        <TweetForm onSubmit={onSubmit}/> 
+        <Divider classes={{root: classes.dividerColor}} />
         <TweetCardList tweets={data}/>
         {data.listTweet.pageInfo.hasNextPage && (
+      <Grid
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+       >
            <Button
               onClick={() =>
                 fetchMore({
@@ -152,12 +151,12 @@ export default function Tweets() {
                  variant="contained"
                  color="default"
                  className={classes.button}
-                //  startIcon={<CloudUploadIcon />}
+                justifyContent='center' // this does the magic
                >
                 More 
             </Button>
+            </Grid>
           )}
-      </section>
     </div>
   )
 }

@@ -1,39 +1,40 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import GridList from '@material-ui/core/GridList';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import Divider from '@material-ui/core/Divider';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Avatar from '@material-ui/core/Avatar';
+import Typography from '@material-ui/core/Typography';
 import TweetCard from './TweetCard';
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    overflow: 'hidden',
+    width: '60%',
+    margin: '2% 20% 0 20%',
     backgroundColor: theme.palette.background.paper,
   },
-  gridList: {
-    width: 500,
-    height: 450,
-    // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
-    transform: 'translateZ(0)',
-  },
-  icon: {
-    color: 'white',
+  inline: {
+    display: 'inline',
   },
 }));
-export default function AdvancedGridList({tweets}) {
+
+export default function TweetCardList({tweets}) {
   const classes = useStyles();
   const {
     listTweet: {
       edges,
     }
   } = tweets;
+  console.log(edges); 
   return (
-    <div className={classes.root}>
-      <GridList cellHeight={200} spacing={1} className={classes.gridList}>
+    <List className={classes.root}>
         {edges.map(({node}) => (
-          <TweetCard key={node.id} item={node}/>
-        ))}
-      </GridList>
-    </div>
+         <> 
+          <TweetCard key={node.id} tweet={node}/>
+           <Divider variant="inset" component="li" />
+           </>
+         ))}
+    </List>
   );
 }

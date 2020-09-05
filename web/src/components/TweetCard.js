@@ -1,67 +1,54 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import Divider from '@material-ui/core/Divider';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import { withRouter } from 'react-router'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 345,
+    width: '60%',
+    margin: '2% 20% 0 20%',
+    backgroundColor: theme.palette.background.paper,
   },
-  media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
-  },
-  expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)',
-  },
-  avatar: {
-    backgroundColor: red[500],
+  inline: {
+    display: 'inline',
   },
 }));
 
-const TweetCard = ({item}) => {
+const TweetCard = ({tweet}) => {
   const classes = useStyles();
-  const {name} = item.user;
+  const {name} = tweet.user;
   const nameTag = name.charAt(0); 
-  const created = item.created;
-  const text = item.text;
+  const created = tweet.created;
+  const text = tweet.text;
+  
   return (
-    <Card className={classes.root}>
-      <CardHeader
-        avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            {nameTag}
-          </Avatar>
+    <ListItem alignItems="flex-start">
+      <ListItemAvatar>
+        <Avatar alt={nameTag} src="/static/images/avatar/2.jpg" />
+      </ListItemAvatar>
+      <ListItemText
+        primary={name}
+        secondary={
+          <React.Fragment>
+            <Typography
+              component="span"
+              variant="body2"
+              className={classes.inline}
+              color="textPrimary"
+            >
+             @{created} 
+            </Typography>
+            - {text}
+          </React.Fragment>
         }
-        title={name}
-        subheader={created}
       />
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-        {text} 
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-      </CardActions>
-    </Card>
+    </ListItem>
   );
 }
 

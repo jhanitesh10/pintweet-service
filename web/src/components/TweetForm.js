@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import { withRouter } from 'react-router'
 import SendButton from './SendButton';
@@ -16,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(1),
     width: '25ch',
   },
+  
 }));
 
 const TweetForm = ({onSubmit}) => {
@@ -30,9 +32,14 @@ const TweetForm = ({onSubmit}) => {
 
   return (
     <div className={classes.root}>
-      <div>
-      <form onSubmit={handleSubmit} >
-
+      <Grid
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+       >
+      <Grid item xs={3}>
+      <form onSubmit={handleSubmit}>
         <TextField
           id="outlined-margin-none"
           label="userName"
@@ -47,7 +54,6 @@ const TweetForm = ({onSubmit}) => {
         <TextField
           id="outlined-full-width"
           label="Tweet"
-          style={{ margin: 8 }}
           placeholder="type.."
           fullWidth
           margin="normal"
@@ -62,12 +68,12 @@ const TweetForm = ({onSubmit}) => {
           color="primary"
           type="submit"
           className={classes.button}
-          endIcon={<Icon>send</Icon>}
         >
         Send
-      </Button>
+        </Button>
         </ form>
-      </div>
+        </Grid>   
+        </Grid> 
     </div>
   );
 }
