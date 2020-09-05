@@ -20,72 +20,18 @@ const useStyles = makeStyles((theme) => ({
     color: 'white',
   },
 }));
-
-/**
- * The example data is structured as follows:
- *
- * import image from 'path/to/image.jpg';
- * [etc...]
- *
- * const tileData = [
- *   {
- *     img: image,
- *     title: 'Image',
- *     author: 'author',
- *     featured: true,
- *   },
- *   {
- *     [etc...]
- *   },
- * ];
- */
-const list = [
-  {
-    id: 'twet-1', 
-    text: 'My first tweet', 
-    created: "20 January, 2020", 
-    updated: "20 January, 2020",
-    user: {
-      id: 'user-1',
-      name: 'Nitesh',
-      created: "20 January, 2020", 
-      updated: "20 January, 2020",
-    },
-  },
-  {
-    id: 'twet-2', 
-    text: 'My first tweet', 
-    created: "20 January, 2020", 
-    updated: "20 January, 2020",
-    user: {
-      id: 'user-1',
-      name: 'Nitesh',
-      created: "20 January, 2020", 
-      updated: "20 January, 2020",
-    },
-  },
-  {
-    id: 'twet-3', 
-    text: 'My first tweet', 
-    created: "20 January, 2020", 
-    updated: "20 January, 2020",
-    user: {
-      id: 'user-1',
-      name: 'Nitesh',
-      created: "20 January, 2020", 
-      updated: "20 January, 2020",
-    },
-
-  },
-]
-export default function AdvancedGridList() {
+export default function AdvancedGridList({tweets}) {
   const classes = useStyles();
-
+  const {
+    listTweet: {
+      edges,
+    }
+  } = tweets;
   return (
     <div className={classes.root}>
       <GridList cellHeight={200} spacing={1} className={classes.gridList}>
-        {list.map((item) => (
-          <TweetCard props={item}/>
+        {edges.map(({node}) => (
+          <TweetCard key={node.id} item={node}/>
         ))}
       </GridList>
     </div>

@@ -34,23 +34,26 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TweetCard = () => {
+const TweetCard = ({item}) => {
   const classes = useStyles();
+  const {name} = item.user;
+  const nameTag = name.charAt(0); 
+  const created = item.created;
+  const text = item.text;
   return (
     <Card className={classes.root}>
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
-            R
+            {nameTag}
           </Avatar>
         }
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
+        title={name}
+        subheader={created}
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          This impressive paella is a perfect party dish and a fun meal to cook together with your
-          guests. Add 1 cup of frozen peas along with the mussels, if you like.
+        {text} 
         </Typography>
       </CardContent>
       <CardActions disableSpacing>

@@ -1,16 +1,14 @@
 import { Switch, Route } from 'react-router-dom'
 import React, {Fragment} from 'react'
 import Header from './Header';
-import TweetCardList from './TweetCardList';
-import TweetForm from './TweetForm';
+import Tweets from '../pages/Tweets';
 
 const App = () => (
   <Fragment>
     <Header />
     <div>
-      <TweetForm />
       <Switch>
-        <Route exact path="/" component={TweetCardList} />
+        <Route exact path="/" component={Tweets} />
       </Switch>
     </div>
   </Fragment>
