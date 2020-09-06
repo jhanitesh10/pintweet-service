@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import { v4 as uuidv4 } from 'uuid';
 import Grid from '@material-ui/core/Grid';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import Divider from '@material-ui/core/Divider';
 /* Graphql operations */
@@ -120,7 +121,11 @@ export default function Tweets() {
 
    
   if (loading) {
-    return <Loader />
+   return (
+    <div style={{display: 'flex', justifyContent: 'center'}}>
+        <CircularProgress  />
+      </div>
+   ) 
   }
   
   if (error) {
@@ -151,7 +156,7 @@ export default function Tweets() {
                  variant="contained"
                  color="default"
                  className={classes.button}
-                justifyContent='center' // this does the magic
+                justifyContent='center' 
                >
                 More 
             </Button>
