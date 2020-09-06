@@ -106,6 +106,11 @@ export default function Tweets() {
     return result;
   };
   const onSubmit = async (data)=> {
+    if(data.name === "" && data.text==="")  {
+      console.log("Enter the value");
+      window.location.reload(false);
+      return;
+    }
     const user = {
       id: uuidv4(),
       name: data.name
@@ -115,8 +120,9 @@ export default function Tweets() {
       text: data.text,
       userId: user.id,
     };
-    createUser({ variables: { id: user.id, name: user.name}, })
-    addTweet({ variables: { id: tweet.id, tweetInput: {text: tweet.text, userId: tweet.userId}}, })
+    await createUser({ variables: { id: user.id, name: user.name}, })
+    await addTweet({ variables: { id: tweet.id, tweetInput: {text: tweet.text, userId: tweet.userId}}, })
+    window.location.reload(false);
   }
 
    
