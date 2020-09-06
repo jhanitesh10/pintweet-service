@@ -26,14 +26,13 @@ export default function TweetCardList({tweets}) {
       edges,
     }
   } = tweets;
-  console.log(edges); 
   return (
     <List className={classes.root}>
         {edges.map(({node}) => (
          <> 
           <TweetCard key={node.id} tweet={node}/>
-           <Divider variant="inset" component="li" />
-           </>
+           <Divider ariant="inset" component="li" />
+         </>
          ))}
     </List>
   );

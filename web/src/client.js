@@ -19,7 +19,6 @@ const link = ApolloLink.from([
 ])
 const cache = new InMemoryCache()
 
-
 const client = new ApolloClient({
   link,
   cache

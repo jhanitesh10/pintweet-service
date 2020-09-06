@@ -75,7 +75,7 @@ export default function Tweets() {
   const { loading, error, data, fetchMore } = useQuery(LIST_TWEETS,
     {
       variables: {
-        first: 2,
+        first: 5,
       },
       fetchPolicy: "cache-and-network"
     }
