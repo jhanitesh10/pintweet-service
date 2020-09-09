@@ -1,4 +1,4 @@
-# TODO: Revit to organize it  
+# TODO: Revit to organize it
 # TODO: make region dynamic
 service: pintweet-service-tweet
 custom:
@@ -29,52 +29,55 @@ provider:
   environment:
     TWEET_TABLE: ${self:custom.tableName}
     AWS_REGION_NAME: ${self:provider.region}
-    
 
 functions:
   TweetFunction:
     handler: index.handler
     events:
       - http:
-          path: tweet 
+          path: tweets
           method: Get
           cors: true
 
 resources:
   Resources:
-  # TODO: Improve table design 
-  # TODO: Discussion on table provision
+    # TODO: Improve table design
+    # TODO: Discussion on table provision
     Tweet:
       Type: "AWS::DynamoDB::Table"
       Properties:
         TableName: ${self:custom.tableName}
         AttributeDefinitions:
-          - AttributeName: id 
+          - AttributeName: id
             AttributeType: S
-          - AttributeName: typ 
+          - AttributeName: typ
+            AttributeType: S
+          - AttributeName: dtC
             AttributeType: S
         # TODO:                           Attributes are commented out to satisfy cloudformation
         # - AttributeName:                text #  tweetert ext
         #   AttributeType:                S
-        # - AttributeName:                uN #  user name 
+        # - AttributeName:                uN #  user name
         #   AttributeType:                S
-        # - AttributeName:                uE #  user email 
+        # - AttributeName:                uE #  user email
         #   AttributeType:                S
-        # - AttributeName:                dtC #  date created 
+        # - AttributeName:                dtC #  date created
         #   AttributeType:                S
-        # - AttributeName:                dtU #  date updated 
+        # - AttributeName:                dtU #  date updated
         #   AttributeType:                S
         KeySchema:
-          - AttributeName: id 
+          - AttributeName: id
             KeyType: HASH
         ProvisionedThroughput:
           ReadCapacityUnits: 10
           WriteCapacityUnits: 10
         GlobalSecondaryIndexes:
-          - IndexName: CONTEXT 
+          - IndexName: CONTEXT
             KeySchema:
-              - AttributeName: typ 
+              - AttributeName: typ
                 KeyType: HASH
+              - AttributeName: dtC 
+                KeyType: RANGE 
             Projection:
               ProjectionType: ALL
             ProvisionedThroughput:
