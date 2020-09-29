@@ -14,7 +14,6 @@ module.exports = {
         cursor: `${id}-C`, 
         node: {
           id, 
-          userId: uId, 
           text: t, 
           created: dtC, 
           updated:dtU,

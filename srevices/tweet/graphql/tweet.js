@@ -12,7 +12,6 @@ const typeDefs = gql`
   }
   type Tweet {
     id: ID!
-    userId: ID!
     text: String!
     user: User!
     created: String!
