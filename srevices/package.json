@@ -7,5 +7,8 @@
   "name": "srevices",
   "version": "1.0.0",
   "main": "gateway.js",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "dev": "node ./user/index.js & node ./tweet/index.js & node gateway.js"
+  }
 }

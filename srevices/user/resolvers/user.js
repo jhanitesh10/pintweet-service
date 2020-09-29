@@ -14,7 +14,6 @@ module.exports = {
   },
   Mutation: {
     async createUser(_, { id, name}) {
-      console.log("INside create", id, name);
      const {dtC, dtU}= await createUser({id, name}); 
      return {
         id,
